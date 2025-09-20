@@ -1,4 +1,4 @@
-/* General body and container styles */
+
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     color: #f1f1f1;
@@ -8,13 +8,10 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-
-    /* New background properties */
-   background: url('/images/idk.jpg') no-repeat center center fixed;
+    background: url('/images/idk.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
-/* Full-screen grid layout */
 .main-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -25,26 +22,26 @@ body {
 }
 
 .main-content, .right-panel {
-    background-color: rgba(30, 30, 30, 0.3); /* Slightly transparent background */
+    background-color: rgba(30, 30, 30, 0.3); 
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(51, 51, 51, 0.5); /* Semi-transparent border */
-    backdrop-filter: blur(15px); /* This creates the glass blur effect */
-    -webkit-backdrop-filter: blur(15px); /* For Safari compatibility */
+    border: 1px solid rgba(51, 51, 51, 0.5); 
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px); 
     animation: fadeIn 0.8s ease-out;
 }
-/* Header and titles */
+
 .header {
-    display: flex; /* Makes the logo and h1 appear side-by-side */
-    align-items: center; /* Vertically centers the items */
-    justify-content: center; /* Horizontally centers the items */
-    gap: 15px; /* Adds space between the logo and the text */
-    margin-bottom: 30px; /* Adjust spacing below the header */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-bottom: 30px;
 }
 
 .header .logo {
-    max-width: 100px; /* Make the logo smaller to fit next to the text */
+    max-width: 100px; 
     height: auto;
     padding-top: 28px;
 }
@@ -56,7 +53,7 @@ body {
     letter-spacing: 1px;
     margin: 0;
     padding-top: 20px;
-    font-family: "Major Mono Display", monospace; /* Apply the new font here */
+    font-family: "Major Mono Display", monospace; 
 }
 p {
     text-align: center;
@@ -64,7 +61,7 @@ p {
     margin-bottom: 30px;
 }
 
-/* Form element styles */
+
 .form-group {
     margin-bottom: 25px;
 }
@@ -85,17 +82,17 @@ textarea,
 select {
     width: 100%;
     padding: 12px;
-    border: 1px solid rgba(68, 68, 68, 0.5); /* Semi-transparent border */
+    border: 1px solid rgba(68, 68, 68, 0.5); 
     border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    background-color: rgba(30, 30, 30, 0.5); /* Darker, semi-transparent background */
+    background-color: rgba(30, 30, 30, 0.5); 
     color: #f1f1f1;
     transition: border-color 0.3s, box-shadow 0.3s;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    backdrop-filter: blur(8px); /* The glass effect */
+    backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px); /* For Safari */
 }
 
@@ -108,7 +105,7 @@ select:focus {
     outline: none;
 }
 
-/* Flexbox layout for sections */
+
 .manual-entry {
     display: flex;
     gap: 10px;
@@ -122,12 +119,12 @@ select:focus {
     min-width: 150px;
 }
 
-/* Buttons with modern styles */
+
 .manual-entry button,
 .send-btn {
     padding: 12px 20px;
     border: none;
-    border-radius: 25px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     font-weight: 600;
@@ -136,10 +133,10 @@ select:focus {
 }
 
 .manual-entry button {
-    background-color: rgba(40, 40, 40, 0.7); /* Black tinted, semi-transparent background */
+    background-color: rgba(40, 40, 40, 0.7); 
     color: white;
-    backdrop-filter: blur(15px); /* Apply the glass blur effect */
-    -webkit-backdrop-filter: blur(15px); /* For Safari */
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px); 
 }
 
 .manual-entry button:hover {
@@ -158,38 +155,39 @@ select:focus {
 .send-btn {
     width: 100%;
     padding: 18px;
-    background-color: rgba(30, 30, 30, 0.7); /* Black tinted, semi-transparent background */
-    border: 1px solid rgba(51, 51, 51, 0.5); /* Semi-transparent border */
+    background-color: rgba(30, 30, 30, 0.7); 
+    border: 1px solid rgba(51, 51, 51, 0.5); 
     color: white;
     font-size: 2.0em;
     font-weight: bold;
     letter-spacing: 1px;
     margin-top: 30px;
-    backdrop-filter: blur(15px); /* Apply the glass blur effect */
-    -webkit-backdrop-filter: blur(15px); /* For Safari */
+    backdrop-filter: blur(15px); 
+    -webkit-backdrop-filter: blur(15px); 
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); 
     will-change: transform;
     font-family: "Major Mono Display", monospace;
 }
 
 .send-btn:hover {
-    background-color: rgba(40, 40, 40, 0.8); /* Slightly darker on hover */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Subtle black glimmer */
+    background-color: rgba(40, 40, 40, 0.8); 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .send-btn:active {
     transform: scale(0.98);
 }
-/* Recipient and status display styles */
+
 .recipients-list,
 #status-display,
 #validation-errors {
     margin-top: 25px;
 }
 .recipients-list {
-    max-height: 17vh; /* Set a maximum height (e.g., 40% of viewport height) */
-    overflow-y: auto; /* Add a vertical scrollbar when content overflows */
-    padding-right: 15px; /* Add padding to prevent content from touching the scrollbar */
+    max-height: 17vh; 
+    overflow-y: auto; 
+    padding-right: 15px; 
 }
 
 .recipient-item {
@@ -223,7 +221,7 @@ select:focus {
     color: #c23341;
 }
 
-/* Validation and status messages */
+
 .validation-msg {
     display: block;
     font-size: 0.9em;
@@ -253,18 +251,17 @@ select:focus {
     color: #dc3545;
 }
 
-/* Drag and drop area styles */
 .drop-zone {
     border: 2px dashed #e8e9ea;
     border-radius: 10px;
     padding: 40px;
     text-align: center;
     cursor: pointer;
-    background-color: rgba(30, 30, 30, 0.5); /* Glass effect background */
+    background-color: rgba(30, 30, 30, 0.5); 
     color: #b0b0b0;
     transition: background-color 0.3s, border-color 0.3s;
-    backdrop-filter: blur(8px); /* The glass effect */
-    -webkit-backdrop-filter: blur(8px); /* For Safari */
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
 }
 
 .drop-zone:hover {
@@ -281,7 +278,7 @@ select:focus {
     display: none;
 }
 
-/* Progress Bar Styles */
+
 #progress-container {
     width: 100%;
     background-color: #333;
@@ -304,17 +301,17 @@ select:focus {
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
     .main-grid {
-        grid-template-columns: 1fr; /* Stack columns on top of each other */
+        grid-template-columns: 1fr; /
         padding: 10px;
         gap: 15px;
     }
 
     .main-content, .right-panel {
-        padding: 20px; /* Reduce padding for smaller screens */
+        padding: 20px; 
     }
 
     .header {
-        flex-direction: row; /* Ensure logo and text are in one line */
+        flex-direction: row; 
         gap: 10px;
     }
     
@@ -327,8 +324,8 @@ select:focus {
     }
 
     .send-btn {
-        width: 80%; /* Make the button smaller */
-        margin: 20px auto 0; /* Center the button */
+        width: 80%; 
+        margin: 20px auto 0; 
         display: block;
     }
 }
