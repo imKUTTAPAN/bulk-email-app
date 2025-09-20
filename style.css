@@ -304,8 +304,31 @@ select:focus {
 /* Responsive design for mobile devices */
 @media (max-width: 768px) {
     .main-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Stack columns on top of each other */
         padding: 10px;
         gap: 15px;
+    }
+
+    .main-content, .right-panel {
+        padding: 20px; /* Reduce padding for smaller screens */
+    }
+
+    .header {
+        flex-direction: row; /* Ensure logo and text are in one line */
+        gap: 10px;
+    }
+    
+    .header .logo {
+        max-width: 40px;
+    }
+    
+    .header h1 {
+        font-size: 1.8em;
+    }
+
+    .send-btn {
+        width: 80%; /* Make the button smaller */
+        margin: 20px auto 0; /* Center the button */
+        display: block;
     }
 }
