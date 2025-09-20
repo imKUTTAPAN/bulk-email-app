@@ -1,0 +1,197 @@
+/* General body and container styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changed to flex-start for top alignment */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 900px; /* Increased max-width for desktop */
+    width: 90%; /* Let's it take up more screen on larger devices */
+    margin: 40px auto; /* Added margin for top and bottom spacing */
+}
+
+/* Headings and sub-headings */
+h1 {
+    text-align: center;
+    color: #007BFF;
+    margin-bottom: 5px;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Form element styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 12px 0;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Manual entry section */
+.manual-entry {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.manual-entry input {
+    flex: 1; /* Distributes space evenly */
+    min-width: 150px; /* Ensures inputs don't get too small */
+}
+
+.manual-entry button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.manual-entry button:hover {
+    background-color: #218838;
+}
+
+/* Send button */
+.send-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.send-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Recipients and status */
+.recipients-list,
+#status-display {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 25px;
+}
+
+.recipient-item {
+    background-color: #e9ecef;
+    padding: 8px 15px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipient-item button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+
+    .manual-entry input {
+        min-width: unset;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+/* Status and metrics styles */
+#status-display {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.status {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.sending {
+    color: #FFC107; /* Orange for "Sending" */
+}
+
+.completed {
+    color: #28a745; /* Green for "Completed" */
+}
+
+.error {
+    color: #dc3545; /* Red for "Error" */
+}
+
+.metrics {
+    border-top: 2px solid #007BFF;
+    padding-top: 20px;
+}
+
+.metrics h3 {
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+
+.metrics p {
+    text-align: left;
+    margin: 5px 0;
+    color: #333;
+}
