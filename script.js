@@ -9,40 +9,133 @@ const addRecipientBtn = document.getElementById('add-recipient-btn');
 const subjectLine = document.getElementById('subject-line');
 const messageInput = document.getElementById('message-input');
 const statusDisplay = document.getElementById('status-display');
+const csvDropZone = document.getElementById('csv-drop-zone');
+const emailValidationMsg = document.getElementById('email-validation-msg');
+const validationErrorsDisplay = document.getElementById('validation-errors');
+const templateSelect = document.getElementById('template-select');
+const progressBar = document.getElementById('progress-bar');
+const progressText = document.getElementById('progress-text');
+const progressContainer = document.getElementById('progress-container');
 
 // This array will hold all of our recipient objects
 let recipients = [];
+let invalidRecipients = []; // New array to hold invalid recipients
 
-// Listen for a change event on the CSV file input
-csvUpload.addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    
-    // Clear previous recipients when a new file is uploaded
-    recipients = []; 
-    
-    // Check if a file was selected
-    if (file) {
-        // Use Papa Parse to read and parse the CSV file
-        Papa.parse(file, {
-            header: true, // Treat the first row as column headers
-            skipEmptyLines: true,
-            complete: function(results) {
-                // The parsed data is in results.data
-                const parsedData = results.data;
-                
-                // Process the data to validate and remove duplicates
-                const newRecipients = processRecipients(parsedData);
-                
-                // Add the new recipients to our main array
-                recipients = [...newRecipients];
+// Define our pre-written email templates with personalization placeholders
+const emailTemplates = {
+    welcome: {
+        subject: "Welcome to Our Platform!",
+        message: "Hi ((first_name))! Welcome to our platform. We're excited to have you join our community and look forward to seeing what you'll create."
+    },
+    newsletter: {
+        subject: "Monthly Newsletter: Your September Update",
+        message: "Hello ((first_name))! Here is your monthly update. In this issue, we'll cover the latest news, features, and tips to help you get the most out of our service."
+    },
+    promotion: {
+        subject: "Don't Miss Out! A Special Offer Just For You!",
+        message: "Hi ((first_name))! We wanted to let you know about a special promotion for our valued users. Get 20% off your next purchase when you use the code: SPECIAL20."
+    }
+};
 
-                // Remove duplicates and re-render the list
-                recipients = removeDuplicates(recipients);
-                renderRecipients();
-            }
-        });
+// Disable the Add button initially
+addRecipientBtn.disabled = true;
+
+// Listeners for the template select dropdown
+templateSelect.addEventListener('change', (event) => {
+    const templateName = event.target.value;
+    if (templateName) {
+        const template = emailTemplates[templateName];
+        subjectLine.value = template.subject;
+        messageInput.value = template.message;
+    } else {
+        // Clear the fields if "Select a template..." is chosen
+        subjectLine.value = '';
+        messageInput.value = '';
     }
 });
+
+// Listen for the 'input' or 'blur' event on the email field for real-time validation
+manualEmail.addEventListener('blur', validateManualEmail);
+manualEmail.addEventListener('input', validateManualEmail);
+
+
+/**
+ * Validates the email format for manual entry and updates the UI.
+ */
+function validateManualEmail() {
+    const email = manualEmail.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email === '') {
+        emailValidationMsg.textContent = '';
+        emailValidationMsg.className = 'validation-msg';
+        addRecipientBtn.disabled = true;
+    } else if (emailRegex.test(email)) {
+        emailValidationMsg.textContent = 'Valid email.';
+        emailValidationMsg.className = 'validation-msg valid';
+        addRecipientBtn.disabled = false;
+    } else {
+        emailValidationMsg.textContent = 'Invalid email format.';
+        emailValidationMsg.className = 'validation-msg invalid';
+        addRecipientBtn.disabled = true;
+    }
+}
+
+// Listeners for the drag-and-drop events
+csvDropZone.addEventListener('dragover', (event) => {
+    event.preventDefault(); // This is crucial to allow a drop
+    csvDropZone.classList.add('drag-over');
+});
+
+csvDropZone.addEventListener('dragleave', () => {
+    csvDropZone.classList.remove('drag-over');
+});
+
+csvDropZone.addEventListener('drop', (event) => {
+    event.preventDefault(); // Prevent browser from opening the dropped file
+    csvDropZone.classList.remove('drag-over');
+
+    const file = event.dataTransfer.files[0];
+    if (file && file.name.endsWith('.csv')) {
+        handleFile(file);
+    } else {
+        alert('Please drop a valid CSV file.');
+    }
+});
+
+// Listener for clicking the drop zone (as a fallback)
+csvDropZone.addEventListener('click', () => {
+    csvUpload.click();
+});
+
+// Listener for the hidden file input
+csvUpload.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        handleFile(file);
+    }
+});
+
+/**
+ * Handles the file processing using Papa Parse.
+ * @param {File} file - The file object to be processed.
+ */
+function handleFile(file) {
+    recipients = [];
+    invalidRecipients = []; // Clear previous errors
+    
+    Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+            const newRecipients = processRecipients(results.data);
+            recipients = [...newRecipients];
+            recipients = removeDuplicates(recipients);
+            renderRecipients();
+            renderValidationErrors(); // Call the new function
+        }
+    });
+}
 
 // Listen for a click event on the "Add" button for manual entry
 addRecipientBtn.addEventListener('click', function(event) {
@@ -53,10 +146,8 @@ addRecipientBtn.addEventListener('click', function(event) {
     const firstName = manualFirstName.value.trim();
     const lastName = manualLastName.value.trim();
     
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    // Validate the email format and check if it's empty
-    if (email && emailRegex.test(email)) {
+    // We don't need to re-validate here because the button is disabled if invalid
+    if (email) {
         const newRecipient = {
             email: email,
             first_name: firstName,
@@ -74,7 +165,12 @@ addRecipientBtn.addEventListener('click', function(event) {
         manualEmail.value = '';
         manualFirstName.value = '';
         manualLastName.value = '';
+        
+        // Disable button and clear message after successful add
+        addRecipientBtn.disabled = true;
+        emailValidationMsg.textContent = '';
     } else {
+        // This case should not be reachable since the button is disabled
         alert('Please enter a valid email address.');
     }
 });
@@ -94,15 +190,25 @@ emailForm.addEventListener('submit', async function(event) {
         return;
     }
 
+    // Show a sending status to the user and progress bar
+    statusDisplay.innerHTML = '';
+    progressContainer.style.display = 'block';
+
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10;
+        if (progress <= 100) {
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '%';
+        }
+    }, 200);
+
     // Prepare the data to be sent to the backend
     const campaignData = {
         subject: subjectLine.value,
         message: messageInput.value,
         recipients: recipients,
     };
-
-    // Show a sending status to the user
-    statusDisplay.innerHTML = '<p class="status">Campaign status: <span class="sending">Sending...</span></p>';
 
     try {
         // Send the data to our Vercel serverless function
@@ -115,6 +221,11 @@ emailForm.addEventListener('submit', async function(event) {
         });
 
         const result = await response.json();
+
+        // Clear the progress interval after the response is received
+        clearInterval(interval);
+        progressBar.style.width = '100%';
+        progressText.textContent = '100%';
 
         // Check for a successful response
         if (response.ok) {
@@ -141,27 +252,51 @@ function processRecipients(data) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     data.forEach(row => {
-        // Ensure email column exists and has a value before processing
-        if (row.email) {
-            const email = row.email.trim();
-            const firstName = row.first_name ? row.first_name.trim() : '';
-            const lastName = row.last_name ? row.last_name.trim() : '';
-
-            // Validate the email format
-            if (email && emailRegex.test(email)) {
-                validRecipients.push({
-                    email: email,
-                    first_name: firstName,
-                    last_name: lastName
-                });
-            } else {
-                // You could add logic here to display an error message for invalid emails
-                console.error(`Invalid email format found: ${email}`);
-            }
+        const email = row.email ? row.email.trim() : '';
+        const firstName = row.first_name ? row.first_name.trim() : '';
+        const lastName = row.last_name ? row.last_name.trim() : '';
+        
+        if (!email) {
+            invalidRecipients.push({ ...row, reason: "Email address is missing." });
+        } else if (!emailRegex.test(email)) {
+            invalidRecipients.push({ ...row, reason: "Invalid email format." });
+        } else {
+            validRecipients.push({
+                email: email,
+                first_name: firstName,
+                last_name: lastName
+            });
         }
     });
-
+    
     return validRecipients;
+}
+
+/**
+ * Renders the invalid recipients on the page.
+ */
+function renderValidationErrors() {
+    if (invalidRecipients.length > 0) {
+        // Modified this line to include the count
+        let errorHtml = `<h4>Invalid Entries (${invalidRecipients.length})</h4><ul>`;
+        invalidRecipients.forEach(invalidItem => {
+            const email = invalidItem.email ? invalidItem.email : '(missing)';
+            const name = invalidItem.first_name ? invalidItem.first_name + ' ' + invalidItem.last_name : '';
+            errorHtml += `
+                <li>
+                    <strong>Name:</strong> ${name || 'N/A'}<br>
+                    <strong>Email:</strong> ${email || 'N/A'}<br>
+                    <strong>Reason:</strong> ${invalidItem.reason}
+                </li>
+            `;
+        });
+        errorHtml += '</ul>';
+        validationErrorsDisplay.innerHTML = errorHtml;
+        validationErrorsDisplay.style.display = 'block';
+    } else {
+        validationErrorsDisplay.innerHTML = '';
+        validationErrorsDisplay.style.display = 'none';
+    }
 }
 
 /**
@@ -194,6 +329,8 @@ function renderRecipients() {
     recipients.forEach((recipient, index) => {
         const recipientItem = document.createElement('div');
         recipientItem.classList.add('recipient-item');
+        // Add the fade-in class
+        recipientItem.classList.add('fade-in');
 
         const nameSpan = document.createElement('span');
         nameSpan.textContent = `${recipient.first_name} ${recipient.last_name} <${recipient.email}>`;

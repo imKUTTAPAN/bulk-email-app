@@ -7,7 +7,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Changed to flex-start for top alignment */
+    align-items: flex-start;
     min-height: 100vh;
 }
 
@@ -16,9 +16,9 @@ body {
     padding: 30px 40px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 900px; /* Increased max-width for desktop */
-    width: 90%; /* Let's it take up more screen on larger devices */
-    margin: 40px auto; /* Added margin for top and bottom spacing */
+    max-width: 900px;
+    width: 90%;
+    margin: 40px auto;
 }
 
 /* Headings and sub-headings */
@@ -74,52 +74,73 @@ textarea:focus {
 .manual-entry {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    flex-wrap: wrap;
 }
 
 .manual-entry input {
-    flex: 1; /* Distributes space evenly */
-    min-width: 150px; /* Ensures inputs don't get too small */
+    flex: 1;
+    min-width: 150px;
 }
 
-.manual-entry button {
+/* Button styles with animation */
+.manual-entry button,
+.send-btn,
+.recipient-item button {
     padding: 10px 15px;
-    background-color: #28a745;
-    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    will-change: transform; /* Hint for browser performance */
 }
 
-.manual-entry button:hover {
-    background-color: #218838;
+/* Hover and active states for all buttons */
+.manual-entry button:hover,
+.send-btn:hover,
+.recipient-item button:hover {
+    transform: scale(1.05); /* Slight size increase on hover */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* Glimmer effect */
 }
 
-/* Send button */
+.manual-entry button:active,
+.send-btn:active,
+.recipient-item button:active {
+    transform: scale(0.95); /* Shrink on click for tactile feedback */
+}
+
+/* Specific button colors */
+.manual-entry button {
+    background-color: #28a745;
+    color: white;
+}
+
+.manual-entry button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    transform: scale(1);
+    box-shadow: none;
+}
+
 .send-btn {
     width: 100%;
     padding: 15px;
     background-color: #007BFF;
     color: white;
-    border: none;
-    border-radius: 5px;
     font-size: 18px;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
     margin-top: 20px;
 }
 
-.send-btn:hover {
-    background-color: #0056b3;
+.recipient-item button {
+    background-color: #dc3545;
+    color: white;
 }
 
 /* Recipients and status */
 .recipients-list,
-#status-display {
-    border-top: 1px solid #eee;
+#status-display,
+#validation-errors {
     padding-top: 20px;
     margin-top: 25px;
 }
@@ -134,64 +155,104 @@ textarea:focus {
     align-items: center;
 }
 
-.recipient-item button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    cursor: pointer;
+/* Fade-in animation for dynamically added items */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Media queries for responsiveness */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Style for the validation errors section */
+#validation-errors {
+    padding: 15px;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    background-color: #f8d7da;
+    color: #721c24;
+    display: none;
+}
+
+/* Real-time validation message styles */
+.validation-msg {
+    display: block;
+    font-size: 0.9em;
+    margin-top: 5px;
+    height: 1.2em;
+}
+
+.valid {
+    color: #28a745;
+}
+
+.invalid {
+    color: #dc3545;
+}
+
+/* Drag and drop area styles */
+.drop-zone {
+    border: 2px dashed #007BFF;
+    border-radius: 10px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.drop-zone p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.drag-over {
+    background-color: #e2f0ff;
+    border-color: #007BFF;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+/* Progress Bar Styles */
+#progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: hidden;
+    display: none;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 25px;
+    background-color: #007BFF;
+    text-align: center;
+    line-height: 25px;
+    color: white;
+    transition: width 0.4s ease;
+}
+
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .container {
         width: 95%;
         padding: 20px;
         margin: 20px auto;
     }
-
     .manual-entry input {
         min-width: unset;
         width: 100%;
         margin-bottom: 10px;
     }
-}
-/* Status and metrics styles */
-#status-display {
-    text-align: center;
-    margin-top: 30px;
-}
-
-.status {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.sending {
-    color: #FFC107; /* Orange for "Sending" */
-}
-
-.completed {
-    color: #28a745; /* Green for "Completed" */
-}
-
-.error {
-    color: #dc3545; /* Red for "Error" */
-}
-
-.metrics {
-    border-top: 2px solid #007BFF;
-    padding-top: 20px;
-}
-
-.metrics h3 {
-    margin-bottom: 10px;
-    color: #007BFF;
-}
-
-.metrics p {
-    text-align: left;
-    margin: 5px 0;
-    color: #333;
 }

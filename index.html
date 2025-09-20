@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulk Email Campaign Manager</title>
+    <title>Bulk Buddy</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Bulk Email Campaign Manager</h1>
+        <h1>Bulk Buddy</h1>
         <p>Compose, configure, and send bulk email campaigns.</p>
 
         <form id="email-form">
+            <div class="form-group">
+    <label for="template-select">Email Templates</label>
+    <select id="template-select">
+        <option value="">Select a template...</option>
+        <option value="welcome">Welcome to our platform!</option>
+        <option value="newsletter">Monthly Newsletter</option>
+        <option value="promotion">Special Promotion</option>
+    </select>
+</div>
             <div class="form-group">
                 <label for="subject-line">Subject Line</label>
                 <input type="text" id="subject-line" name="subject-line" required>
@@ -24,13 +33,17 @@
 
             <div class="form-group">
                 <label for="csv-upload">Recipient List (CSV)</label>
-                <input type="file" id="csv-upload" name="csv-upload" accept=".csv" required>
+                <div id="csv-drop-zone" class="drop-zone">
+    <p>Drag & drop your CSV file here or click to select.</p>
+    <input type="file" id="csv-upload" name="csv-upload" accept=".csv" class="hidden-file-input">
+</div>
             </div>
 
             <div class="form-group">
-                <label>Or, Add a single recipient manually</label>
+                <label>Or, Add a single recipient mahtmnually</label>
                 <div class="manual-entry">
                     <input type="email" id="manual-email" placeholder="Email">
+                    <span id="email-validation-msg" class="validation-msg"></span>
                     <input type="text" id="manual-first-name" placeholder="First Name">
                     <input type="text" id="manual-last-name" placeholder="Last Name">
                     <button type="button" id="add-recipient-btn">Add</button>
@@ -39,11 +52,18 @@
 
             <div class="recipients-list" id="recipients-list">
                 </div>
+                <div id="validation-errors">
+    </div>
+
 
             <button type="submit" class="send-btn">Send Campaign</button>
         </form>
 
         <div id="status-display">
+            <div id="progress-container">
+        <div id="progress-bar"></div>
+        <p id="progress-text">0%</p>
+    </div>
             </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
