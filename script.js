@@ -333,11 +333,12 @@ function renderRecipients() {
         recipientItem.classList.add('fade-in');
 
         const nameSpan = document.createElement('span');
-        nameSpan.textContent = `${recipient.first_name} ${recipient.last_name} <${recipient.email}>`;
+        nameSpan.innerHTML = `<strong>${recipient.first_name} ${recipient.last_name}</strong> <span class="email">${recipient.email}</span>`;
         
-        // Create a remove button for each recipient
+        // Create a remove button with the Font Awesome icon
         const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
+        removeButton.classList.add('remove-btn');
+        removeButton.innerHTML = `<i class="fas fa-trash-alt"></i>`;
         removeButton.onclick = () => removeRecipient(index);
         
         recipientItem.appendChild(nameSpan);

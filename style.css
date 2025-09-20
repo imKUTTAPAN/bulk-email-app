@@ -1,80 +1,120 @@
 /* General body and container styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f7f6;
-    color: #333;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #f1f1f1;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
+
+    /* New background properties */
+    background: url('/Users/ameenashraf/Documents/coding/bulk-email-app/images/idk.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.container {
-    background-color: #fff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
-    width: 90%;
-    margin: 40px auto;
+/* Full-screen grid layout */
+.main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-/* Headings and sub-headings */
-h1 {
-    text-align: center;
-    color: #007BFF;
-    margin-bottom: 5px;
+.main-content, .right-panel {
+    background-color: rgba(30, 30, 30, 0.3); /* Slightly transparent background */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(51, 51, 51, 0.5); /* Semi-transparent border */
+    backdrop-filter: blur(15px); /* This creates the glass blur effect */
+    -webkit-backdrop-filter: blur(15px); /* For Safari compatibility */
+    animation: fadeIn 0.8s ease-out;
+}
+/* Header and titles */
+.header {
+    display: flex; /* Makes the logo and h1 appear side-by-side */
+    align-items: center; /* Vertically centers the items */
+    justify-content: center; /* Horizontally centers the items */
+    gap: 15px; /* Adds space between the logo and the text */
+    margin-bottom: 30px; /* Adjust spacing below the header */
 }
 
+.header .logo {
+    max-width: 100px; /* Make the logo smaller to fit next to the text */
+    height: auto;
+    padding-top: 28px;
+}
+
+.header h1 {
+    font-size: 4.5em;
+    font-weight: 300;
+    color: #f1f1f1;
+    letter-spacing: 1px;
+    margin: 0;
+    padding-top: 20px;
+    font-family: "Major Mono Display", monospace; /* Apply the new font here */
+}
 p {
     text-align: center;
-    color: #666;
-    margin-bottom: 25px;
+    color: #b0b0b0;
+    margin-bottom: 30px;
 }
 
 /* Form element styles */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #555;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #b0b0b0;
 }
 
 input[type="text"],
 input[type="email"],
-textarea {
+textarea,
+input[type="text"],
+input[type="email"],
+textarea,
+select {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid rgba(68, 68, 68, 0.5); /* Semi-transparent border */
+    border-radius: 8px;
     box-sizing: border-box;
     font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-input[type="file"] {
-    width: 100%;
-    padding: 12px 0;
+    background-color: rgba(30, 30, 30, 0.5); /* Darker, semi-transparent background */
+    color: #f1f1f1;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    backdrop-filter: blur(8px); /* The glass effect */
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     border-color: #007BFF;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
     outline: none;
 }
 
-/* Manual entry section */
+/* Flexbox layout for sections */
 .manual-entry {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    align-items: center;
+    margin-top: 15px;
 }
 
 .manual-entry input {
@@ -82,106 +122,108 @@ textarea:focus {
     min-width: 150px;
 }
 
-/* Button styles with animation */
+/* Buttons with modern styles */
 .manual-entry button,
-.send-btn,
-.recipient-item button {
-    padding: 10px 15px;
+.send-btn {
+    padding: 12px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-size: 16px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    will-change: transform; /* Hint for browser performance */
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    will-change: transform;
 }
 
-/* Hover and active states for all buttons */
-.manual-entry button:hover,
-.send-btn:hover,
-.recipient-item button:hover {
-    transform: scale(1.05); /* Slight size increase on hover */
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5); /* Glimmer effect */
-}
-
-.manual-entry button:active,
-.send-btn:active,
-.recipient-item button:active {
-    transform: scale(0.95); /* Shrink on click for tactile feedback */
-}
-
-/* Specific button colors */
 .manual-entry button {
-    background-color: #28a745;
+    background-color: rgba(40, 40, 40, 0.7); /* Black tinted, semi-transparent background */
     color: white;
+    backdrop-filter: blur(15px); /* Apply the glass blur effect */
+    -webkit-backdrop-filter: blur(15px); /* For Safari */
+}
+
+.manual-entry button:hover {
+    background-color: rgba(40, 40, 40, 0.8);
 }
 
 .manual-entry button:disabled {
-    background-color: #6c757d;
+    background-color: rgba(54, 55, 56, 0.5);
     cursor: not-allowed;
-    transform: scale(1);
+    transform: none;
     box-shadow: none;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
 .send-btn {
     width: 100%;
-    padding: 15px;
-    background-color: #007BFF;
+    padding: 18px;
+    background-color: rgba(30, 30, 30, 0.7); /* Black tinted, semi-transparent background */
+    border: 1px solid rgba(51, 51, 51, 0.5); /* Semi-transparent border */
     color: white;
-    font-size: 18px;
+    font-size: 2.0em;
     font-weight: bold;
-    margin-top: 20px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    backdrop-filter: blur(15px); /* Apply the glass blur effect */
+    -webkit-backdrop-filter: blur(15px); /* For Safari */
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    will-change: transform;
+    font-family: "Major Mono Display", monospace;
 }
 
-.recipient-item button {
-    background-color: #dc3545;
-    color: white;
+.send-btn:hover {
+    background-color: rgba(40, 40, 40, 0.8); /* Slightly darker on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Subtle black glimmer */
 }
 
-/* Recipients and status */
+.send-btn:active {
+    transform: scale(0.98);
+}
+/* Recipient and status display styles */
 .recipients-list,
 #status-display,
 #validation-errors {
-    padding-top: 20px;
     margin-top: 25px;
+}
+.recipients-list {
+    max-height: 17vh; /* Set a maximum height (e.g., 40% of viewport height) */
+    overflow-y: auto; /* Add a vertical scrollbar when content overflows */
+    padding-right: 15px; /* Add padding to prevent content from touching the scrollbar */
 }
 
 .recipient-item {
-    background-color: #e9ecef;
-    padding: 8px 15px;
-    margin-bottom: 8px;
-    border-radius: 5px;
+    background-color: #2a2a2a;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #333;
+    transition: transform 0.2s ease;
+    
 }
 
-/* Fade-in animation for dynamically added items */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.recipient-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease-out;
+.recipient-item .remove-btn {
+    background: none;
+    border: none;
+    color: #f1f1f1;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: color 0.2s ease;
 }
 
-/* Style for the validation errors section */
-#validation-errors {
-    padding: 15px;
-    border: 1px solid #dc3545;
-    border-radius: 5px;
-    background-color: #f8d7da;
-    color: #721c24;
-    display: none;
+.recipient-item .remove-btn:hover {
+    color: #c23341;
 }
 
-/* Real-time validation message styles */
+/* Validation and status messages */
 .validation-msg {
     display: block;
     font-size: 0.9em;
@@ -197,26 +239,42 @@ textarea:focus {
     color: #dc3545;
 }
 
+#validation-errors {
+    padding: 15px;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: #f1f1f1;
+    display: none;
+}
+
+#validation-errors h4 {
+    margin-top: 0;
+    color: #dc3545;
+}
+
 /* Drag and drop area styles */
 .drop-zone {
-    border: 2px dashed #007BFF;
+    border: 2px dashed #e8e9ea;
     border-radius: 10px;
     padding: 40px;
     text-align: center;
     cursor: pointer;
+    background-color: rgba(30, 30, 30, 0.5); /* Glass effect background */
+    color: #b0b0b0;
     transition: background-color 0.3s, border-color 0.3s;
-    background-color: #f8f9fa;
-    color: #6c757d;
+    backdrop-filter: blur(8px); /* The glass effect */
+    -webkit-backdrop-filter: blur(8px); /* For Safari */
 }
 
-.drop-zone p {
-    margin: 0;
-    font-size: 1.1em;
+.drop-zone:hover {
+    background-color: rgba(30, 30, 30, 0.6);
+    border-color: #979797;
 }
 
 .drag-over {
-    background-color: #e2f0ff;
-    border-color: #007BFF;
+    background-color: rgba(51, 51, 51, 0.7);
+    border-color: #9b9a9a;
 }
 
 .hidden-file-input {
@@ -226,7 +284,7 @@ textarea:focus {
 /* Progress Bar Styles */
 #progress-container {
     width: 100%;
-    background-color: #e0e0e0;
+    background-color: #333;
     border-radius: 5px;
     margin-top: 20px;
     overflow: hidden;
@@ -243,16 +301,11 @@ textarea:focus {
     transition: width 0.4s ease;
 }
 
-/* Responsive design for smaller screens */
+/* Responsive design for mobile devices */
 @media (max-width: 768px) {
-    .container {
-        width: 95%;
-        padding: 20px;
-        margin: 20px auto;
-    }
-    .manual-entry input {
-        min-width: unset;
-        width: 100%;
-        margin-bottom: 10px;
+    .main-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 15px;
     }
 }
