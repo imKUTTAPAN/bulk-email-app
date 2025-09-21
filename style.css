@@ -303,7 +303,7 @@ select:focus {
     .main-grid {
         grid-template-columns: 1fr; /
         padding: 10px;
-        gap: 20px;
+        gap: 15px;
     }
 
     .main-content, .right-panel {
@@ -407,7 +407,8 @@ select:focus {
 @media (max-width: 768px) {
   .metric-grid {
         grid-template-columns: repeat(2, 1fr); /* Shows 2 cards per row on mobile */
-        gap: 10px;
+        gap: 20px;
+        scale: 80%;
     }
 
     .metric-card {
