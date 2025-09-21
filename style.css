@@ -155,9 +155,9 @@ select:focus {
 .send-btn {
     width: 100%;
     padding: 18px;
-    background-color: rgb(163, 162, 162); 
-    border: 1px solid rgba(49, 49, 49, 0.69); 
-    color: rgb(29, 29, 29);
+    background-color: rgba(163, 162, 162, 0.509); 
+    border: 1px solid rgba(102, 102, 102, 0.5); 
+    color: rgba(200, 198, 198, 0.556);
     font-size: 2.0em;
     font-weight: bold;
     letter-spacing: 1px;
@@ -171,7 +171,7 @@ select:focus {
 }
 
 .send-btn:hover {
-    background-color: rgb(100, 100, 100); 
+    background-color: rgba(100, 100, 100, 0.8); 
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     color: #d4d1d1;
 }
