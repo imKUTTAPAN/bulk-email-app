@@ -16,8 +16,6 @@ const templateSelect = document.getElementById('template-select');
 const progressBar = document.getElementById('progress-bar');
 const progressText = document.getElementById('progress-text');
 const progressContainer = document.getElementById('progress-container');
-const successPopup = document.getElementById('success-popup');
-const closePopupBtn = document.getElementById('close-popup');
 
 // This array will hold all of our recipient objects
 let recipients = [];
@@ -192,7 +190,7 @@ emailForm.addEventListener('submit', async function(event) {
         return;
     }
 
-    // New logic: clear status and show progress bar
+    // Show a sending status to the user and progress bar
     statusDisplay.innerHTML = '';
     progressContainer.style.display = 'block';
 
@@ -213,6 +211,7 @@ emailForm.addEventListener('submit', async function(event) {
     };
 
     try {
+        // Send the data to our Vercel serverless function
         const response = await fetch('/api/send', {
             method: 'POST',
             headers: {
@@ -225,16 +224,13 @@ emailForm.addEventListener('submit', async function(event) {
 
         // Clear the progress interval after the response is received
         clearInterval(interval);
-        progressContainer.style.display = 'none'; // Hide the progress bar
-        
+        progressBar.style.width = '100%';
+        progressText.textContent = '100%';
+
+        // Check for a successful response
         if (response.ok) {
             // Display the campaign metrics
             displayCampaignMetrics(result.metrics);
-            
-            // Show the success popup and scroll to the dashboard
-            showSuccessPopup();
-            document.getElementById('status-display').scrollIntoView({ behavior: 'smooth' });
-
         } else {
             // Handle errors from the server
             statusDisplay.innerHTML = `<p class="status error">Error: ${result.message}</p>`;
@@ -245,24 +241,6 @@ emailForm.addEventListener('submit', async function(event) {
         statusDisplay.innerHTML = '<p class="status error">A network error occurred. Please try again.</p>';
     }
 });
-
-// Add event listener to close the popup
-closePopupBtn.addEventListener('click', hideSuccessPopup);
-
-/**
- * Displays the success popup.
- */
-function showSuccessPopup() {
-    successPopup.classList.remove('hidden');
-    setTimeout(hideSuccessPopup, 3000); // Hide the popup automatically after 3 seconds
-}
-
-/**
- * Hides the success popup.
- */
-function hideSuccessPopup() {
-    successPopup.classList.add('hidden');
-}
 
 /**
  * Validates and sanitizes recipient data from the CSV.
@@ -409,6 +387,7 @@ function displayCampaignMetrics(metrics) {
             </div>
         </div>
     `;
+    // Make sure you have a logo image named "dashboard-logo.png" in your /images folder
 }
 
 // Initial render to show "No recipients added yet."
