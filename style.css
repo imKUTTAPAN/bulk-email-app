@@ -391,13 +391,13 @@ select:focus {
 }
 
 .metric-card .number {
-    font-size: 10em; /* Larger font size for the number */
+    font-size: 15em; /* Larger font size for the number */
     font-weight: bold;
     color: #f1f1f1;
     line-height: 1;
     position: absolute;
     bottom: 20px; /* Aligns to the bottom */
-    left: 20px; /* Aligns to the left */
+    right: 20px; /* Aligns to the left */
 }
 
 /* Responsive for smaller screens */
