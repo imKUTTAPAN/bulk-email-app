@@ -153,7 +153,7 @@ select:focus {
 }
 
 .send-btn {
-    width: 100%;
+    width: 98%;
     padding: 18px;
     background-color: rgba(163, 162, 162, 0.509); 
     border: 1px solid rgba(102, 102, 102, 0.5); 
@@ -162,6 +162,7 @@ select:focus {
     font-weight: bold;
     letter-spacing: 1px;
     margin-top: 30px;
+    margin-left: 20px;
     backdrop-filter: blur(15px); 
     -webkit-backdrop-filter: blur(15px); 
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
