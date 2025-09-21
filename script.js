@@ -362,15 +362,32 @@ function removeRecipient(index) {
  */
 function displayCampaignMetrics(metrics) {
     statusDisplay.innerHTML = `
-        <div class="metrics">
-            <h3>Campaign Metrics</h3>
-            <p class="status completed">Status: ${metrics.status}</p>
-            <p><strong>Total Recipients:</strong> ${recipients.length}</p>
-            <p><strong>Sent:</strong> ${metrics.sent_count}</p>
-            <p><strong>Failed:</strong> ${metrics.failed_count}</p>
-            <p><strong>Simulated Opens:</strong> ${metrics.opens_count}</p>
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <img src="/images/dashboard-logo.png" alt="Dashboard Logo" class="logo">
+                <h2>DASHBOARD</h2>
+            </div>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <h3>TOTAL</h3>
+                    <p class="number">${recipients.length}</p>
+                </div>
+                <div class="metric-card">
+                    <h3>SENT</h3>
+                    <p class="number">${metrics.sent_count}</p>
+                </div>
+                <div class="metric-card">
+                    <h3>FAILED</h3>
+                    <p class="number">${metrics.failed_count}</p>
+                </div>
+                <div class="metric-card">
+                    <h3>OPENS</h3>
+                    <p class="number">${metrics.opens_count}</p>
+                </div>
+            </div>
         </div>
     `;
+    // We use the logo image from the /images folder. Make sure to name your logo dashboard-logo.png
 }
 
 // Initial render to show "No recipients added yet."
