@@ -421,9 +421,10 @@ select:focus {
     }
 
     .metric-card .number {
-        font-size: 3.5em; /* Smaller font size for mobile numbers */
+        font-size: 5em; /* Smaller font size for mobile numbers */
         bottom: 5px;
-        right: 5px;
+        right: 10px;
+        padding-right: 10px;
     }
    .dashboard-header {
         justify-content: center;
