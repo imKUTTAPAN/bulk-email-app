@@ -387,7 +387,7 @@ function displayCampaignMetrics(metrics) {
             </div>
         </div>
     `;
-    // We use the logo image from the /images folder. Make sure to name your logo dashboard-logo.png
+    // Make sure you have a logo image named "dashboard-logo.png" in your /images folder
 }
 
 // Initial render to show "No recipients added yet."

@@ -373,32 +373,31 @@ select:focus {
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    /* The key to the layout */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    aspect-ratio: 1 / 1; /* This forces the card to be a perfect square */
-    position: relative; /* For precise positioning of elements */
+    aspect-ratio: 1 / 1;
+    position: relative;
 }
 
 .metric-card h3 {
-    font-size: 1em;
+    font-size: 0.9em; /* Smaller font size for the title */
     color: #b0b0b0;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 0;
-    align-self: flex-start; /* Aligns to the top left */
+    align-self: flex-start;
 }
 
 .metric-card .number {
-    font-size: 3em;
+    font-size: 3.5em; /* Larger font size for the number */
     font-weight: bold;
     color: #f1f1f1;
     line-height: 1;
-    position: absolute; /* Positions the number precisely */
-    bottom: 10px; /* Aligns to the bottom */
-    left: 10px; /* Aligns to the left */
+    position: absolute;
+    bottom: 20px; /* Aligns to the bottom */
+    left: 20px; /* Aligns to the left */
 }
 
 /* Responsive for smaller screens */
