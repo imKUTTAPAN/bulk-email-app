@@ -405,7 +405,33 @@ select:focus {
 
 /* Responsive for smaller screens */
 @media (max-width: 768px) {
-    .metric-grid {
-        grid-template-columns: 1fr;
+  .metric-grid {
+        grid-template-columns: repeat(2, 1fr); /* Shows 2 cards per row on mobile */
+        gap: 10px;
+    }
+
+    .metric-card {
+        padding: 15px; /* Adjust card padding for smaller size */
+    }
+
+    .metric-card h3 {
+        font-size: 0.8em; /* Smaller font size for mobile titles */
+    }
+
+    .metric-card .number {
+        font-size: 2.5em; /* Smaller font size for mobile numbers */
+        bottom: 15px;
+        left: 15px;
+    }
+   .dashboard-header {
+        justify-content: center;
+    }
+
+    .dashboard-header .logo {
+        max-width: 30px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.5em;
     }
 }
