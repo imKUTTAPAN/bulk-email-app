@@ -167,7 +167,7 @@ select:focus {
     transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); 
     will-change: transform;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: monospace;
 }
 
 .send-btn:hover {
