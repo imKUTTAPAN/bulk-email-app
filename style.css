@@ -382,22 +382,25 @@ select:focus {
 }
 
 .metric-card h3 {
-    font-size: 3em; /* Smaller font size for the title */
-    color: #b0b0b0;
+    font-family: "Libre Franklin", sans-serif;
+    font-size: 4em; /* Smaller font size for the title */
+    color: #dadada;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin: 0;
     align-self: flex-start;
+    padding-left: 30px;
+    padding-top: 30px;
 }
 
 .metric-card .number {
     font-size: 15em; /* Larger font size for the number */
     font-weight: bold;
-    color: #f1f1f1;
+    color: #bbbbbb;
     line-height: 1;
     position: absolute;
-    bottom: 20px; /* Aligns to the bottom */
-    right: 20px; /* Aligns to the left */
+    bottom: 16px; /* Aligns to the bottom */
+    right: 30px; /* Aligns to the left */
 }
 
 /* Responsive for smaller screens */
