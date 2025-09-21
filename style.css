@@ -396,7 +396,7 @@ select:focus {
 }
 
 .metric-card .number {
-    font-size: 15em; /* Larger font size for the number */
+    font-size: 13em; /* Larger font size for the number */
     font-weight: bold;
     color: #bbbbbb;
     line-height: 1;
