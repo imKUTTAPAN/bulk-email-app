@@ -408,7 +408,7 @@ select:focus {
   .metric-grid {
         grid-template-columns: repeat(2, 1fr); /* Shows 2 cards per row on mobile */
         gap: 20px;
-        scale: 80%;
+        scale: 90%;
     }
 
     .metric-card {
