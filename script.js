@@ -192,7 +192,7 @@ emailForm.addEventListener('submit', async function(event) {
         return;
     }
 
-    // Show a sending status to the user and progress bar
+    // New logic: clear status and show progress bar
     statusDisplay.innerHTML = '';
     progressContainer.style.display = 'block';
 
@@ -213,7 +213,6 @@ emailForm.addEventListener('submit', async function(event) {
     };
 
     try {
-        // Send the data to our Vercel serverless function
         const response = await fetch('/api/send', {
             method: 'POST',
             headers: {
@@ -226,10 +225,8 @@ emailForm.addEventListener('submit', async function(event) {
 
         // Clear the progress interval after the response is received
         clearInterval(interval);
-        progressBar.style.width = '100%';
-        progressText.textContent = '100%';
-
-        // Check for a successful response
+        progressContainer.style.display = 'none'; // Hide the progress bar
+        
         if (response.ok) {
             // Display the campaign metrics
             displayCampaignMetrics(result.metrics);
