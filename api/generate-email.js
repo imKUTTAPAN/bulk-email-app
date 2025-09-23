@@ -30,15 +30,22 @@ module.exports = async (req, res) => {
         const response = await result.response;
         const text = response.text();
 
-        // This is the new, more resilient JSON parsing logic.
+        // This is the new, more resilient JSON extraction logic.
         let generatedEmail;
         try {
-            // Trim whitespace and remove markdown backticks if present.
-            // This is the key fix!
-            const cleanedText = text.trim().replace(/^`+|`+$/g, '');
-            generatedEmail = JSON.parse(cleanedText);
+            // Use a regular expression to find the JSON object within the text.
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            
+            if (jsonMatch && jsonMatch[0]) {
+                const jsonString = jsonMatch[0];
+                generatedEmail = JSON.parse(jsonString);
+            } else {
+                // If no JSON object is found, throw an error.
+                throw new Error("Could not find a valid JSON object in the AI response.");
+            }
+
         } catch (parseError) {
-            console.error("JSON Parsing Error:", parseError);
+            console.error("JSON Parsing/Extraction Error:", parseError);
             return res.status(500).json({ 
                 message: "Failed to parse AI-generated content. Please try again.",
                 errorDetails: parseError.message
