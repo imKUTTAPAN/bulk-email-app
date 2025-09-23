@@ -1,7 +1,6 @@
-const express = require('express');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-// Access your API key as a Vercel environment variable
+// Access your API key from Vercel environment variables
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 module.exports = async (req, res) => {
@@ -16,46 +15,38 @@ module.exports = async (req, res) => {
             return res.status(400).json({ message: 'Prompt is required.' });
         }
         
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        // Use a model that supports JSON mode and configure it
+        const model = genAI.getGenerativeModel({ 
+            model: "gemini-1.5-flash", // Using a newer model is recommended
+            generationConfig: {
+                responseMimeType: "application/json", // This enables JSON Mode
+            },
+        });
 
+        // The prompt can now be simpler, as we don't need to instruct it about JSON format.
         const finalPrompt = `
         You are an AI assistant specialized in writing email copy.
-        Based on the following request, generate a subject line and email body.
-        The request is for: "${prompt}"
-        
-        Ensure the output is a single JSON object with two fields: "subject" and "message". Do not include any other text or characters in the response, especially not markdown like backticks.
+        Based on the following request, generate a JSON object with a "subject" and a "message" field.
+        Request: "${prompt}"
         `;
 
         const result = await model.generateContent(finalPrompt);
         const response = await result.response;
         const text = response.text();
 
-        // This is the new, more resilient JSON extraction logic.
-        let generatedEmail;
-        try {
-            // Use a regular expression to find the JSON object within the text.
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
-            
-            if (jsonMatch && jsonMatch[0]) {
-                const jsonString = jsonMatch[0];
-                generatedEmail = JSON.parse(jsonString);
-            } else {
-                // If no JSON object is found, throw an error.
-                throw new Error("Could not find a valid JSON object in the AI response.");
-            }
-
-        } catch (parseError) {
-            console.error("JSON Parsing/Extraction Error:", parseError);
-            return res.status(500).json({ 
-                message: "Failed to parse AI-generated content. Please try again.",
-                errorDetails: parseError.message
-            });
-        }
+        // With JSON mode, the output is guaranteed to be a parsable JSON string.
+        const generatedEmail = JSON.parse(text);
         
         res.status(200).json(generatedEmail);
 
     } catch (error) {
-        console.error("Gemini API Error:", error);
-        res.status(500).json({ message: "Failed to generate email content.", error: error.message });
+        // Log the full error to Vercel logs for better debugging
+        console.error("Error generating email content:", JSON.stringify(error, null, 2));
+
+        res.status(500).json({ 
+            message: "Failed to generate email content.", 
+            // It's good practice not to expose detailed error messages to the client.
+            // error: error.message 
+        });
     }
 };
