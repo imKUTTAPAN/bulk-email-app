@@ -30,10 +30,11 @@ module.exports = async (req, res) => {
         const response = await result.response;
         const text = response.text();
 
-        // New, more resilient JSON parsing logic
+        // This is the new, more resilient JSON parsing logic.
         let generatedEmail;
         try {
-            // Trim whitespace and remove markdown backticks if present
+            // Trim whitespace and remove markdown backticks if present.
+            // This is the key fix!
             const cleanedText = text.trim().replace(/^`+|`+$/g, '');
             generatedEmail = JSON.parse(cleanedText);
         } catch (parseError) {
