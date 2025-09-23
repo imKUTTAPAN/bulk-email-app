@@ -23,18 +23,29 @@ module.exports = async (req, res) => {
         Based on the following request, generate a subject line and email body.
         The request is for: "${prompt}"
         
-        Ensure the output is in JSON format, like this:
-        { "subject": "Generated subject line", "message": "Generated email body" }
+        Ensure the output is a single JSON object with two fields: "subject" and "message". Do not include any other text or characters in the response, especially not markdown like backticks.
         `;
 
         const result = await model.generateContent(finalPrompt);
         const response = await result.response;
         const text = response.text();
 
-        // Parse the JSON string from Gemini's response
-        const generatedEmail = JSON.parse(text);
-
+        // New, more resilient JSON parsing logic
+        let generatedEmail;
+        try {
+            // Trim whitespace and remove markdown backticks if present
+            const cleanedText = text.trim().replace(/^`+|`+$/g, '');
+            generatedEmail = JSON.parse(cleanedText);
+        } catch (parseError) {
+            console.error("JSON Parsing Error:", parseError);
+            return res.status(500).json({ 
+                message: "Failed to parse AI-generated content. Please try again.",
+                errorDetails: parseError.message
+            });
+        }
+        
         res.status(200).json(generatedEmail);
+
     } catch (error) {
         console.error("Gemini API Error:", error);
         res.status(500).json({ message: "Failed to generate email content.", error: error.message });
