@@ -338,13 +338,13 @@ select:focus {
 /* Dashboard Styles */
 .dashboard-container {
     padding: 30px 0;
-    text-align: left; /* Aligns content to the left */
+    text-align: left; 
     animation: fadeIn 0.8s ease-out;
 }
 
 .dashboard-header {
     display: flex;
-    justify-content: flex-start; /* Aligns header to the left */
+    justify-content: flex-start; 
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
@@ -384,7 +384,7 @@ select:focus {
 }
 
 .metric-card h3 {
-    font-size: 3.5em; /* Smaller font size for the title */
+    font-size: 3.5em; 
     color: #dadada;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -396,35 +396,34 @@ select:focus {
 }
 
 .metric-card .number {
-    font-size: 13em; /* Larger font size for the number */
+    font-size: 13em; 
     font-weight: bold;
     color: #bbbbbb;
     line-height: 1;
     position: absolute;
-    bottom: 16px; /* Aligns to the bottom */
-    right: 20px; /* Aligns to the left */
+    bottom: 16px; 
+    right: 20px; 
 }
 
 /* Responsive for smaller screens */
 @media (max-width: 768px) {
   .metric-grid {
-        grid-template-columns: repeat(2, 1fr); /* Shows 2 cards per row on mobile */
+        grid-template-columns: repeat(2, 1fr); 
         gap: 20px;
         scale: 90%;
     }
 
     .metric-card {
-        padding: 15px; /* Adjust card padding for smaller size */
-    }
+        padding: 15px; 
 
     .metric-card h3 {
-        font-size: 2em; /* Smaller font size for mobile titles */
+        font-size: 2em; 
         padding-top: 5px;
         padding-left: 5px;
     }
 
     .metric-card .number {
-        font-size: 5em; /* Smaller font size for mobile numbers */
+        font-size: 5em; 
         bottom: 5px;
         right: 10px;
         padding-right: 10px;
