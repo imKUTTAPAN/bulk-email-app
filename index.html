@@ -20,12 +20,14 @@
             <div class="main-grid">
                 <div class="main-content">
                     <div class="form-group">
-                     <label for="gemini-prompt">Generate Email with Gemini</label>
-                    <div class="gemini-input-group">
-                    <input type="text" id="gemini-prompt" placeholder="e.g., 'Product launch for a new app'">
-                    <button type="button" id="gemini-generate-btn">Generate</button>
+                        <label for="template-select">Email Templates</label>
+                        <select id="template-select">
+                            <option value="">presets [optional]</option>
+                            <option value="welcome">Welcome to our platform!</option>
+                            <option value="newsletter">Monthly Newsletter</option>
+                            <option value="promotion">Special Promotion</option>
+                        </select>
                     </div>
-                </div>
 
                     <div class="form-group">
                         <label for="subject-line">Subject</label>

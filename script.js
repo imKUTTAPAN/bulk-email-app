@@ -12,8 +12,7 @@ const statusDisplay = document.getElementById('status-display');
 const csvDropZone = document.getElementById('csv-drop-zone');
 const emailValidationMsg = document.getElementById('email-validation-msg');
 const validationErrorsDisplay = document.getElementById('validation-errors');
-const geminiPromptInput = document.getElementById('gemini-prompt');
-const geminiGenerateBtn = document.getElementById('gemini-generate-btn');
+const templateSelect = document.getElementById('template-select');
 const progressBar = document.getElementById('progress-bar');
 const progressText = document.getElementById('progress-text');
 const progressContainer = document.getElementById('progress-container');
@@ -22,47 +21,38 @@ const progressContainer = document.getElementById('progress-container');
 let recipients = [];
 let invalidRecipients = []; // New array to hold invalid recipients
 
+// Define our pre-written email templates with personalization placeholders
+const emailTemplates = {
+    welcome: {
+        subject: "Welcome to Our Platform!",
+        message: "Hi ((first_name))! Welcome to our platform. We're excited to have you join our community and look forward to seeing what you'll create."
+    },
+    newsletter: {
+        subject: "Monthly Newsletter: Your September Update",
+        message: "Hello ((first_name))! Here is your monthly update. In this issue, we'll cover the latest news, features, and tips to help you get the most out of our service."
+    },
+    promotion: {
+        subject: "Don't Miss Out! A Special Offer Just For You!",
+        message: "Hi ((first_name))! We wanted to let you know about a special promotion for our valued users. Get 20% off your next purchase when you use the code: SPECIAL20."
+    }
+};
+
 // Disable the Add button initially
 addRecipientBtn.disabled = true;
-// Disable the Generate button initially
-geminiGenerateBtn.disabled = false;
 
-
-// Listeners for the Gemini generate button
-geminiGenerateBtn.addEventListener('click', async () => {
-    const prompt = geminiPromptInput.value.trim();
-    if (!prompt) {
-        alert("Please enter a prompt to generate an email.");
-        return;
-    }
-
-    geminiGenerateBtn.disabled = true;
-    geminiGenerateBtn.textContent = "Generating...";
-
-    try {
-        const response = await fetch('/api/generate-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt }),
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            subjectLine.value = result.subject;
-            messageInput.value = result.message;
-        } else {
-            alert(`Error: ${result.message}`);
-        }
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        alert("Failed to connect to the generation service.");
-    } finally {
-        geminiGenerateBtn.disabled = false;
-        geminiGenerateBtn.textContent = "Generate";
+// Listeners for the template select dropdown
+templateSelect.addEventListener('change', (event) => {
+    const templateName = event.target.value;
+    if (templateName) {
+        const template = emailTemplates[templateName];
+        subjectLine.value = template.subject;
+        messageInput.value = template.message;
+    } else {
+        // Clear the fields if "Select a template..." is chosen
+        subjectLine.value = '';
+        messageInput.value = '';
     }
 });
-
 
 // Listen for the 'input' or 'blur' event on the email field for real-time validation
 manualEmail.addEventListener('blur', validateManualEmail);
@@ -200,7 +190,7 @@ emailForm.addEventListener('submit', async function(event) {
         return;
     }
 
-    // New logic: clear status and show progress bar
+    // Show a sending status to the user and progress bar
     statusDisplay.innerHTML = '';
     progressContainer.style.display = 'block';
 
@@ -221,6 +211,7 @@ emailForm.addEventListener('submit', async function(event) {
     };
 
     try {
+        // Send the data to our Vercel serverless function
         const response = await fetch('/api/send', {
             method: 'POST',
             headers: {
@@ -233,16 +224,13 @@ emailForm.addEventListener('submit', async function(event) {
 
         // Clear the progress interval after the response is received
         clearInterval(interval);
-        progressContainer.style.display = 'none'; // Hide the progress bar
-        
+        progressBar.style.width = '100%';
+        progressText.textContent = '100%';
+
+        // Check for a successful response
         if (response.ok) {
             // Display the campaign metrics
             displayCampaignMetrics(result.metrics);
-            
-            // Show the success popup and scroll to the dashboard
-            // showSuccessPopup(); <-- This line is removed for this update
-            document.getElementById('status-display').scrollIntoView({ behavior: 'smooth' });
-
         } else {
             // Handle errors from the server
             statusDisplay.innerHTML = `<p class="status error">Error: ${result.message}</p>`;
@@ -253,7 +241,6 @@ emailForm.addEventListener('submit', async function(event) {
         statusDisplay.innerHTML = '<p class="status error">A network error occurred. Please try again.</p>';
     }
 });
-
 
 /**
  * Validates and sanitizes recipient data from the CSV.
@@ -400,6 +387,7 @@ function displayCampaignMetrics(metrics) {
             </div>
         </div>
     `;
+    // Make sure you have a logo image named "dashboard-logo.png" in your /images folder
 }
 
 // Initial render to show "No recipients added yet."
