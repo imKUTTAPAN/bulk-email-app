@@ -407,7 +407,7 @@ select:focus {
     }
 
     .dashboard-header .logo {
-        max-width: 60px;
+        max-width: 50px;
     }
 
     .dashboard-header h2 {
@@ -421,18 +421,17 @@ select:focus {
     }
 
     .metric-card {
-        padding: 15px; /* Adjust padding for smaller cards */
-        /* Remove aspect-ratio on mobile to allow cards to shrink */
+        padding: 15px;
         aspect-ratio: auto;
     }
 
     .metric-card h3 {
-        font-size: 1em; /* Further reduce font size to fit */
+        font-size: 1.6em; 
         padding: 0;
     }
 
     .metric-card .number {
-        font-size: 3em; /* Further reduce font size to fit */
+        font-size: 3.5em; 
         position: static;
         margin-top: 10px;
         text-align: right;
