@@ -60,7 +60,6 @@ p {
     margin-bottom: 30px;
 }
 
-
 .form-group {
     margin-bottom: 25px;
 }
@@ -72,9 +71,6 @@ label {
     color: #b0b0b0;
 }
 
-input[type="text"],
-input[type="email"],
-textarea,
 input[type="text"],
 input[type="email"],
 textarea,
@@ -104,7 +100,6 @@ select:focus {
     outline: none;
 }
 
-
 .manual-entry {
     display: flex;
     gap: 10px;
@@ -117,7 +112,6 @@ select:focus {
     flex: 1;
     min-width: 150px;
 }
-
 
 .manual-entry button,
 .send-btn {
@@ -279,7 +273,6 @@ select:focus {
     display: none;
 }
 
-
 #progress-container {
     width: 100%;
     background-color: #333;
@@ -422,21 +415,24 @@ select:focus {
     }
 
     .metric-grid {
-        grid-template-columns: 1fr;
+        /* This line is changed to make two columns */
+        grid-template-columns: 1fr 1fr;
         gap: 15px;
     }
 
     .metric-card {
-        padding: 20px;
+        padding: 15px; /* Adjust padding for smaller cards */
+        /* Remove aspect-ratio on mobile to allow cards to shrink */
+        aspect-ratio: auto;
     }
 
     .metric-card h3 {
-        font-size: 1.8em;
+        font-size: 1em; /* Further reduce font size to fit */
         padding: 0;
     }
 
     .metric-card .number {
-        font-size: 5em;
+        font-size: 3em; /* Further reduce font size to fit */
         position: static;
         margin-top: 10px;
         text-align: right;
