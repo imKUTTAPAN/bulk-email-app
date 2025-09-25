@@ -11,11 +11,12 @@ Bulk Buddy is a simple, browser-based tool designed to help you send personalize
 │   └──package.json
 ├── images/
 │   ├── idk.jpg
+│   ├── dashboard-logo.png
 │   └── logo.png
 ├── README.md
 ├── index.html
 ├── script.js
-├── style.css
+└──style.css
 ```
 
 ## Contributing
